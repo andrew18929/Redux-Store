@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer } from "react";
 import {
   UPDATE_PRODUCTS,
   ADD_TO_CART,
@@ -9,16 +9,24 @@ import {
   UPDATE_CURRENT_CATEGORY,
   CLEAR_CART,
   TOGGLE_CART,
-} from './actions';
+} from "./actions";
+
+const defaultState = {
+  products: [],
+  cart: [],
+  cartOpen: false,
+  categories: [],
+  currentCategory: "",
+};
 
 // The reducer is a function that accepts the current state and an action. It returns a new state based on that action.
-export const reducer = (state, action) => {
+export const reducer = (state = defaultState, action) => {
   switch (action.type) {
     // Returns a copy of state with an update products array. We use the action.products property and spread it's contents into the new array.
     case UPDATE_PRODUCTS:
       return {
         ...state,
-        products: [...action.products],
+        products: [...state.products, action.products],
       };
 
     case ADD_TO_CART:
@@ -92,7 +100,3 @@ export const reducer = (state, action) => {
       return state;
   }
 };
-
-export function useProductReducer(initialState) {
-  return useReducer(reducer, initialState);
-}
