@@ -1,4 +1,3 @@
-import ReduxStoreProvider from "./utils/ReduxStoreProvider";
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
@@ -17,6 +16,8 @@ import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
 import Success from "./pages/Success";
 import OrderHistory from "./pages/OrderHistory";
+import { Provider } from "react-redux";
+import store from "./utils/store";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -42,7 +43,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div>
-          <ReduxStoreProvider>
+          <Provider store={store}>
             <Nav />
             <Switch>
               <Route exact path="/" component={Home} />
@@ -53,7 +54,7 @@ function App() {
               <Route exact path="/products/:id" component={Detail} />
               <Route component={NoMatch} />
             </Switch>
-          </ReduxStoreProvider>
+          </Provider>
         </div>
       </Router>
     </ApolloProvider>
